@@ -1,3 +1,3 @@
-# knative-munich
+# Sources
 
 Demos for Knative Munich Meetup 2019
