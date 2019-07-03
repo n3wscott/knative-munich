@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -11,6 +12,10 @@ import (
 	cloudevents "github.com/cloudevents/sdk-go"
 	"github.com/kelseyhightower/envconfig"
 )
+
+type Color struct {
+	Color string `json:"color"`
+}
 
 // Input accepts a POST body and turns the first 6 chars of the body into a
 // color event.
@@ -32,10 +37,21 @@ func (s *Input) handler(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	color := string(body)
-	if color[0] == "\""[0] {
-		color, err = strconv.Unquote(color)
-		if err != nil {
+
+	// accept strings, quoted strings, json color=value
+
+	if color[0] == "{"[0] {
+		c := Color{}
+		if json.Unmarshal(body, &c); err != nil {
 			panic(err)
+		}
+		color = c.Color
+	} else {
+		if color[0] == "\""[0] {
+			color, err = strconv.Unquote(color)
+			if err != nil {
+				panic(err)
+			}
 		}
 	}
 	if color[0] != "#"[0] {
