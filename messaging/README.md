@@ -1,3 +1,11 @@
 # Messaging
 
-Demos for Knative Munich Meetup 2019
+Color sorting demo.
+
+
+```
+color -> input
+input -> red
+input -> blue
+input -> green
+```

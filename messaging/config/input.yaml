@@ -1,0 +1,12 @@
+apiVersion: serving.knative.dev/v1beta1
+kind: Service
+metadata:
+  name: input
+spec:
+  template:
+    spec:
+      containers:
+        - image: github.com/n3wscott/knative-munich/cmd/input
+          env:
+          - name: TARGET
+            value: "http://input-kn-channel.default.svc.cluster.local"

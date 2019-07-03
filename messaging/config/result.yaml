@@ -1,0 +1,50 @@
+apiVersion: eventing.knative.dev/v1alpha1
+kind: Subscription
+metadata:
+  name: red-result
+  namespace: default
+spec:
+  channel:
+    apiVersion: messaging.knative.dev/v1alpha1
+    kind: InMemoryChannel
+    name: red
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1beta1
+      kind: Service
+      name: event-display
+
+---
+
+apiVersion: eventing.knative.dev/v1alpha1
+kind: Subscription
+metadata:
+  name: green-result
+  namespace: default
+spec:
+  channel:
+    apiVersion: messaging.knative.dev/v1alpha1
+    kind: InMemoryChannel
+    name: green
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1beta1
+      kind: Service
+      name: event-display
+
+---
+
+apiVersion: eventing.knative.dev/v1alpha1
+kind: Subscription
+metadata:
+  name: blue-result
+spec:
+  channel:
+    apiVersion: messaging.knative.dev/v1alpha1
+    kind: InMemoryChannel
+    name: blue
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1beta1
+      kind: Service
+      name: event-display

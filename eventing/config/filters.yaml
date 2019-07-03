@@ -1,0 +1,43 @@
+apiVersion: serving.knative.dev/v1beta1
+kind: Service
+metadata:
+  name: redpass
+spec:
+  template:
+    spec:
+      containers:
+        - image: github.com/n3wscott/knative-munich/cmd/filter
+          env:
+          - name: COLOR
+            value: "red"
+
+---
+
+apiVersion: serving.knative.dev/v1beta1
+kind: Service
+metadata:
+  name: bluepass
+spec:
+  template:
+    spec:
+      containers:
+        - image: github.com/n3wscott/knative-munich/cmd/filter
+          env:
+            - name: COLOR
+              value: "blue"
+
+---
+
+apiVersion: serving.knative.dev/v1beta1
+kind: Service
+metadata:
+  name: greenpass
+spec:
+  template:
+    spec:
+      containers:
+        - image: github.com/n3wscott/knative-munich/cmd/filter
+          env:
+            - name: COLOR
+              value: "green"
+

@@ -1,0 +1,48 @@
+apiVersion: eventing.knative.dev/v1alpha1
+kind: Trigger
+metadata:
+  name: red
+spec:
+  broker: default
+  filter:
+    sourceAndType:
+      type: color
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1beta1
+      kind: Service
+      name: redpass
+
+---
+
+apiVersion: eventing.knative.dev/v1alpha1
+kind: Trigger
+metadata:
+  name: blue
+spec:
+  broker: default
+  filter:
+    sourceAndType:
+      type: color
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1beta1
+      kind: Service
+      name: bluepass
+
+---
+
+apiVersion: eventing.knative.dev/v1alpha1
+kind: Trigger
+metadata:
+  name: green
+spec:
+  broker: default
+  filter:
+    sourceAndType:
+      type: color
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1beta1
+      kind: Service
+      name: greenpass

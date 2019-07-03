@@ -1,0 +1,87 @@
+apiVersion: messaging.knative.dev/v1alpha1
+kind: InMemoryChannel
+metadata:
+  name: red
+
+---
+
+apiVersion: messaging.knative.dev/v1alpha1
+kind: InMemoryChannel
+metadata:
+  name: green
+
+---
+
+apiVersion: messaging.knative.dev/v1alpha1
+kind: InMemoryChannel
+metadata:
+  name: blue
+
+---
+
+apiVersion: eventing.knative.dev/v1alpha1
+kind: Subscription
+metadata:
+  name: red
+  namespace: default
+spec:
+  channel:
+    apiVersion: messaging.knative.dev/v1alpha1
+    kind: InMemoryChannel
+    name: input
+  reply:
+    channel:
+      apiVersion: messaging.knative.dev/v1alpha1
+      kind: InMemoryChannel
+      name: red
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1beta1
+      kind: Service
+      name: redpass
+
+---
+
+apiVersion: eventing.knative.dev/v1alpha1
+kind: Subscription
+metadata:
+  name: blue
+  namespace: default
+spec:
+  channel:
+    apiVersion: messaging.knative.dev/v1alpha1
+    kind: InMemoryChannel
+    name: input
+  reply:
+    channel:
+      apiVersion: messaging.knative.dev/v1alpha1
+      kind: InMemoryChannel
+      name: blue
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1beta1
+      kind: Service
+      name: bluepass
+
+---
+
+
+apiVersion: eventing.knative.dev/v1alpha1
+kind: Subscription
+metadata:
+  name: green
+spec:
+  channel:
+    apiVersion: messaging.knative.dev/v1alpha1
+    kind: InMemoryChannel
+    name: input
+  reply:
+    channel:
+      apiVersion: messaging.knative.dev/v1alpha1
+      kind: InMemoryChannel
+      name: green
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1beta1
+      kind: Service
+      name: greenpass
