@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 
 	cloudevents "github.com/cloudevents/sdk-go"
 	"github.com/kelseyhightower/envconfig"
@@ -31,18 +32,24 @@ func (s *Input) handler(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	color := string(body)
-	if len(color) > 6 {
-		color = color[:6]
+	if color[0] == "\""[0] {
+		color, err = strconv.Unquote(color)
+		if err != nil {
+			panic(err)
+		}
 	}
 	if color[0] != "#"[0] {
 		color = "#" + color
+	}
+	if len(color) > 7 {
+		color = color[:7]
 	}
 
 	event := cloudevents.NewEvent(cloudevents.VersionV03)
 	event.SetSource("github.com/n3wscott/knative-munich/messaging/input/")
 	event.SetType("color")
 	event.SetSubject(color)
-	_ = event.SetData("{}")
+	_ = event.SetData(color)
 
 	_, err = s.ce.Send(ctx, event)
 	if err != nil {

@@ -1,0 +1,14 @@
+apiVersion: sources.eventing.knative.dev/v1alpha1
+kind: ContainerSource
+metadata:
+  name: colors
+spec:
+  sink:
+    apiVersion: serving.knative.dev/v1beta1
+    kind: Service
+    name: input
+  template:
+    spec:
+      containers:
+        - image: github.com/n3wscott/knative-munich/cmd/colors
+          name: colors

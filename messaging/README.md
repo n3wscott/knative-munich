@@ -5,7 +5,12 @@ Color sorting demo.
 
 ```
 color -> input
-input -> red
-input -> blue
-input -> green
+
+input -> redpass -> red
+input -> bluepass -> blue
+input -> greenpass -> green
+
+red -> event-display
+blue -> event-display
+green -> event-display
 ```
